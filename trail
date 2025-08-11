@@ -1,0 +1,42 @@
+from tkinter import*
+ 
+def quit ():
+    main_window.destroy()
+ 
+def entry_print():
+    print(entry_first_name.get())
+    print(entry_last_name.get())
+ 
+def main():
+    Button(main_window, text="Quit",command=quit) .grid(row=1,column=5)
+    Button(main_window, text="Print",command=entry_print) .grid(row=1,column=6)
+    Label(main_window, text="Customer First Name").grid(row=1,column=0)
+    Label(main_window, text="Customer last  Name").grid(row=2,column=0)
+    Label(main_window, text="recipt number").grid(row=3,column=0)
+    Label(main_window, text="item that is hired").grid(row=4,column=0)
+    Label(main_window, text="item customer has hired").grid(row=5,column=0)
+    main_window.mainloop()
+ 
+ 
+ 
+main_window=Tk()
+entry_first_name=Entry(main_window)
+entry_first_name.grid(row=1,column=1)
+ 
+ 
+entry_last_name=Entry(main_window)
+entry_last_name.grid(row=2,column=1)
+ 
+entry_recipt_number=Entry(main_window)
+entry_recipt_number.grid(row=3,column=1)
+ 
+ 
+entry_item_hired=Entry(main_window)
+entry_item_hired.grid(row=4,column=1)
+ 
+ 
+entry_customer_hired=Entry(main_window)
+entry_customer_hired.grid(row=5,column=1)
+ 
+ 
+main()
