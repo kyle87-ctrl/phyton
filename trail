@@ -17,7 +17,17 @@ def main():
     Label(main_window, text="item customer has hired").grid(row=5,column=0)
     main_window.mainloop()
  
+
+def append_name ():
+    append([entry_name.get(),entry_age.get(),entry_gender.get()])
+    entry_name.delete(0,'end')
+    entry_age.delete(0,'end')
+    entry_gender.delete(0,'end')
+    entry_gender.delete(0,'end')
+    counters['total_entries'] += 1
  
+
+
  
 main_window=Tk()
 entry_first_name=Entry(main_window)
