@@ -6,6 +6,10 @@ def quit ():
 def entry_print():
     print(entry_first_name.get())
     print(entry_last_name.get())
+    print(entry_recipt_number.get())
+    print(entry_item_that_is_hired.get())
+    print(entry_item_the_customer_hired.get())
+  
  
 def main():
     Button(main_window, text="Quit",command=quit) .grid(row=1,column=5)
