@@ -19,16 +19,17 @@ def main():
  
 
 def append_name ():
-    append([entry_name.get(),entry_age.get(),entry_gender.get()])
+global camp_details,entry_name,entry_age,entry_gender
+if len(entry_name.get())!=0 :
+    camp_details.append([entry_Customer First Name.get(),entry_Customer last  Name.get(),entry_recipt number.get(),entry_item that is hired.get(),entry_item customer has hired.get()   (])
     entry_name.delete(0,'end')
     entry_age.delete(0,'end')
     entry_gender.delete(0,'end')
-    entry_gender.delete(0,'end')
     counters['total_entries'] += 1
- 
-
 
  
+ 
+
 main_window=Tk()
 entry_first_name=Entry(main_window)
 entry_first_name.grid(row=1,column=1)
