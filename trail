@@ -26,24 +26,24 @@ def append_name ():
 global camp_details,entry_name,entry_age,entry_gender
 if len(entry_name.get())!=0 :
     camp_details.append([entry_Customer First Name.get(),entry_Customer last  Name.get(),entry_recipt number.get(),entry_item that is hired.get(),entry_item customer has hired.get()   (])
-    entry_name.delete(0,'end')
-    entry_age.delete(0,'end')
-    entry_gender.delete(0,'end')
+    Entry_name.delete(0,'end')
+    Entry_age.delete(0,'end')
+    Entry_gender.delete(0,'end')
     counters['total_entries'] += 1
 
  
  
 
 main_window=Tk()
-entry_first_name=Entry(main_window)
-entry_first_name.grid(row=1,column=1)
+Entry_first_name=Entry(main_window)
+Entry_first_name.grid(row=1,column=1)
  
  
-entry_last_name=Entry(main_window)
-entry_last_name.grid(row=2,column=1)
+Entry_last_name=Entry(main_window)
+Entry_last_name.grid(row=2,column=1)
  
-entry_recipt_number=Entry(main_window)
-entry_recipt_number.grid(row=3,column=1)
+Entry_recipt_number=Entry(main_window)
+Entry_recipt_number.grid(row=3,column=1)
  
  
 entry_item_hired=Entry(main_window)
