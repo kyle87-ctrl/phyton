@@ -12,7 +12,7 @@ def entry_print():
   
  
 def main():
-    Button(main_window, text="Quit",command=quit) .grid(row=1,column=5)
+    Button(main_window, text="Quit",command=quit) .grid(row=1,column=
     Button(main_window, text="Print",command=entry_print) .grid(row=1,column=6)
     Label(main_window, text="Customer First Name").grid(row=1,column=0)
     Label(main_window, text="Customer last  Name").grid(row=2,column=0)
