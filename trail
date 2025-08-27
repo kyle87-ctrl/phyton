@@ -23,7 +23,7 @@ def main():
  
 
 def append_name ():
-global camp_details,entry_name,entry_age,entry_gender
+global camp_details,entry_name,entry_age,entry_customer_name 
 if len(entry_name.get())!=0 :
     camp_details.append([entry_Customer First Name.get(),entry_Customer last  Name.get(),entry_recipt number.get(),entry_item that is hired.get(),entry_item customer has hired.get()   (])
     Entry_name.delete(0,'end')
