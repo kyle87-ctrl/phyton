@@ -37,7 +37,27 @@ def append_name ():
     counters['total_entries'] += 1
  
  
-    
+#delete row from list 
+def delete row_row():
+ global camp_details, delete_item
+total_entries, name count
+del camp_details [int(delete__item.get()]
+total_entries = total_entreis -1
+delete_item.delete(0,end)
+label (Main_window, text="").grid(column=0,row=name_count+7)
+label (Main_window, text="").grid(column=0,row=name_count+7)
+label (Main_window, text="").grid(column=0,row=name_count+7)
+label (Main_window, text="").grid(column=0,row=name_count+7)
+label (Main_window, text="").grid(column=0,row=name_count+7)
+print_camp_details()
+
+
+
+#create the button and labels
+def set up_buttons():
+globbal camp_details, entry_leader,entry_location,entry_campers,entry_weather,total_entries,delete_item
+button(Main_window, text="Quit", command=quit).grid(column=1,row=0
+button(main_windo, text="Print details"
  
  
     
