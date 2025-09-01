@@ -22,15 +22,13 @@ def main():
     main_window.mainloop()
  
 
-def append_name ():
-global camp_details,entry_name,entry_age,entry_customer_name 
-if len(entry_name.get())!=0 :
-    camp_details.append([entry_Customer First Name.get(),entry_Customer last  Name.get(),entry_recipt number.get(),entry_item that is hired.get(),entry_item customer has hired.get()   (])
-    Entry_name.delete(0,'end')
-    Entry_age.delete(0,'end')
-    Entry_gender.delete(0,'end')
-    counters['total_entries'] += 1
-
+def print_names ():
+    global j_names, total_entries
+    name_count = 0
+    Label(main_window, font='bold',text="Name").grid(column=0,row=2)
+    while name_count < total_entries :
+        Label(main_window, text=(j_names[name_count])).grid(column=0,row=name_count+3)
+        name_count +=  1
  
  
 
