@@ -22,34 +22,28 @@ def main():
     main_window.mainloop()
  
 
-def print_names ():
-    global j_names, total_entries
-    name_count = 0
-    Label(main_window, font='bold',text="Name").grid(column=0,row=2)
-    while name_count < total_entries :
-        Label(main_window, text=(j_names[name_count])).grid(column=0,row=name_count+3)
-        name_count +=  1
+def append_name ():
+    global camp_details,entry_name,entry_age,entry_gender
+    if len(entry_name.get())!=0 :
+        camp_details.append([entry_Name.get,entry_number.get(),entry_item.get(),entry_hired.get()])
+        entry_name.delete(0,'end')
+        entry_age.delete(0,'end')
+        entry_gender.delete(0,'end')
+        counters['total_entries'] += 1
  
- 
-
 main_window=Tk()
-Entry_first_name=Entry(main_window)
-Entry_first_name.grid(row=1,column=1)
+entry_first_name=Entry(main_window)
+entry_first_name.grid(row=1,column=1)
  
- 
-Entry_last_name=Entry(main_window)
-Entry_last_name.grid(row=2,column=1)
- 
-Entry_recipt_number=Entry(main_window)
-Entry_recipt_number.grid(row=3,column=1)
- 
+entry_last_name=Entry(main_window)
+entry_last_name.grid(row=2,column=1)
+entry_recipt_number=Entry(main_window)
+entry_recipt_number.grid(row=3,column=1)
  
 entry_item_hired=Entry(main_window)
 entry_item_hired.grid(row=4,column=1)
  
- 
 entry_customer_hired=Entry(main_window)
 entry_customer_hired.grid(row=5,column=1)
- 
  
 main()
