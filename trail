@@ -47,7 +47,7 @@ del camp_details [int(delete__item.get()]
 total_entries = total_entreis -1
 delete_item.delete(0,end)
 label (Main_window,text="").grid(column=0,row=name_count+7)
-label (
+label (Main_window,text="").grid(column=0,row=name_count+7)
 label (Main_window, text="").grid(column=0,row=name_count+7)
 label (Main_window, text="").grid(column=0,row=name_count+7)
 label (Main_window, text="").grid(column=0,row=name_count+7)
