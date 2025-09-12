@@ -6,30 +6,7 @@ def entry_print():
     print(entry_last_name.get())
 
 
-def setup_buton ():
-    global entry_name,entry_number,entry_item,entry_hired
-    Button(main_window, text="Quit",command=quit) .grid(row=1,column=5)
-    Button(main_window, text="Print",command=entry_print) .grid(row=1,column=6)
-    Button(main_window, text="Append Details",command=append_name) .grid(row=1,column=7)
-    Label(main_window, text="Customer First Name").grid(row=1,column=0)
-    entry_name = Entry(main_window)
-    entry_name.grid(row=1,column=3)
-    Label(main_window, text="Customer last  Name").grid(row=2,column=0)
-    entry_last = Entry(main_window)
-    entry_last.grid(row=2,column=3)
-    Label(main_window, text="recipt number").grid(row=3,column=0)
-    entry_number = Entry(main_window)
-    entry_number.grid(row=3,column=3)
-    Label(main_window, text="item that is hired").grid(row=4,column=0)
-    entry_item = Entry(main_window)
-    entry_item.grid(row=4,column=3)
-    Label(main_window, text="item customer has hired").grid(row=5,column=0)
-    entry_hired = Entry(main_window)
-    entry_hired.grid(row=5,column=3)
-    main_window.mainloop()
 
- 
-    
 
 def append_name ():
     camp_details.append([entry_name.get,entry_last.get,entry_number.get(),entry_item.get(),entry_hired.get()])
