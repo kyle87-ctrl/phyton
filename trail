@@ -1,6 +1,7 @@
 from tkinter import*
 def quit ():
     main_window.destroy()
+
 def entry_print():
     print(entry_first_name.get())
     print(entry_last_name.get())
