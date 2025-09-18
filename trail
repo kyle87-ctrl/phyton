@@ -47,13 +47,11 @@ def add_hire():
         invalid = True
 
     if not qty_text.isdigit():
-        Label(main_window, fg="red", text="Enter integer 1-500").grid(column=2, row=3)
-        invalid = True
-    else:
-        qty = int(qty_text)
-        if qty < 1 or qty > 500:
-            Label(main_window, fg="red", text="1 - 500 only").grid(column=2, row=3)
-            invalid = True
+    Label(main_window, fg="red", text="Enter integer 1-500").grid(column=2, row=3)
+    invalid = True
+else:
+    qty = int(qty_text)
+    # BUG: no check for range (1–500)
 
     if len(date_from) == 0 or not valid_date(date_from):
         Label(main_window, fg="red", text="DD/MM/YYYY required").grid(column=2, row=4)
