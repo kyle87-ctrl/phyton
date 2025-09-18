@@ -1,60 +1,197 @@
-from tkinter import*
-def quit ():
-    main_window.destroy()
+from tkinter import *
+from tkinter import messagebox
+import random
+import math
+from datetime import datetime
 
-def entry_print():
-    print(entry_first_name.get())
-    print(entry_last_name.get())
+# --------- Global data stores ----------
+hires = []          # list of dicts: each dict holds a hire record
+raffle_entries = [] # list of tuples: (customer_full_name, raffle_number)
+
+# ---------- Utility / validation ----------
+def valid_date(datestr):
+    try:
+        datetime.strptime(datestr, "%m/%d/%Y")
+        return True
+    except Exception:
+        return False
+
+def cartons_needed(quantity):
+    return quantity // 25
+
+# ---------- GUI behaviour functions ----------
+def clear_error_labels():
+    for r in range(6):
+        Label(main_window, text=" " * 20).grid(column=2, row=r)
+
+def add_hire():
+    clear_error_labels()
+    name = entry_name.get().strip()
+    receipt = entry_receipt.get().strip()
+    item = entry_item.get().strip()
+    qty_text = entry_qty.get().strip()
+    date_from = entry_date_from.get().strip()
+    date_return = entry_date_return.get().strip()
+    invalid = False
+
+    if len(name) == 0:
+        Label(main_window, fg="red", text="Required").grid(column=2, row=0)
+        invalid = True
+
+    if len(receipt) == 0:
+        Label(main_window, fg="red", text="Required").grid(column=2, row=1)
+        invalid = True
+
+    if len(item) == 0:
+        Label(main_window, fg="red", text="Required").grid(column=2, row=2)
+        invalid = True
+
+    if not qty_text.isdigit():
+        Label(main_window, fg="red", text="Enter integer 1-500").grid(column=2, row=3)
+        invalid = True
+    else:
+        qty = int(qty_text)
+        if qty < 1 or qty > 500:
+            Label(main_window, fg="red", text="1 - 500 only").grid(column=2, row=3)
+            invalid = True
+
+    if len(date_from) == 0 or not valid_date(date_from):
+        Label(main_window, fg="red", text="DD/MM/YYYY required").grid(column=2, row=4)
+        invalid = True
+    if len(date_return) == 0 or not valid_date(date_return):
+        Label(main_window, fg="red", text="DD/MM/YYYY required").grid(column=2, row=5)
+        invalid = True
+
+    if invalid:
+        return
+
+    raffle_num = random.randint(1, 1000)
+    record = {
+        "name": name,
+        "receipt": receipt,
+        "item": item,
+        "qty": qty,
+        "date_from": date_from,
+        "date_return": date_return,
+        "cartons": cartons_needed(qty),
+        "raffle": raffle_num
+    }
+    hires.append(record)
+    raffle_entries.append((name, raffle_num))
+
+    entry_name.delete(0)
+    entry_receipt.delete(0)
+    entry_item.delete(0)
+    entry_qty.delete(0)
+    entry_date_from.delete(0)
+    entry_date_return.delete(0)
+
+    print_hires()
+    messagebox.showinfo("Added", f"Hire added. Raffle ticket: {raffle_num}")
+
+def print_hires():
+    for widget in main_window.grid_slaves():
+        r = int(widget.grid_info().get("row", 0))
+        if r >= 10:
+            widget.destroy()
+
+    row_base = 9
+    Label(main_window, font=("Helvetica", 10, "bold"), text="Row").grid(column=0, row=row_base)
+    Label(main_window, font=("Helvetica", 10, "bold"), text="Name").grid(column=1, row=row_base)
+    Label(main_window, font=("Helvetica", 10, "bold"), text="Receipt").grid(column=2, row=row_base)
+    Label(main_window, font=("Helvetica", 10, "bold"), text="Item").grid(column=3, row=row_base)
+    Label(main_window, font=("Helvetica", 10, "bold"), text="Qty").grid(column=4, row=row_base)
+    Label(main_window, font=("Helvetica", 10, "bold"), text="Cartons").grid(column=5, row=row_base)
+    Label(main_window, font=("Helvetica", 10, "bold"), text="From").grid(column=6, row=row_base)
+    Label(main_window, font=("Helvetica", 10, "bold"), text="Return").grid(column=7, row=row_base)
+    Label(main_window, font=("Helvetica", 10, "bold"), text="Raffle").grid(column=8, row=row_base)
+
+    for i, rec in enumerate(hires):
+        r = row_base + i
+        Label(main_window, text=str(i)).grid(column=0, row=r)
+        Label(main_window, text=rec["name"]).grid(column=1, row=r)
+        Label(main_window, text=rec["receipt"]).grid(column=2, row=r)
+        Label(main_window, text=rec["item"]).grid(column=3, row=r)
+        Label(main_window, text=str(rec["qty"])).grid(column=4, row=r)
+        Label(main_window, text=str(rec["cartons"])).grid(column=5, row=r)
+        Label(main_window, text=rec["date_from"]).grid(column=6, row=r)
+        Label(main_window, text=rec["date_return"]).grid(column=7, row=r)
+        Label(main_window, text=str(rec["raffle"])).grid(column=8, row=r)
+
+def delete_by_receipt():
+    target = entry_delete_receipt.get().strip()
+    if len(target) == 0:
+        messagebox.showwarning("Delete", "Enter a receipt number to delete")
+        return
+    found = False
+    for idx, rec in enumerate(hires):
+        if rec["receipt"] == target:
+            found = True
+            try:
+                raffle_entries.remove((rec["name"], rec["raffle"]))
+            except ValueError:
+                pass
+            del hires[idx]
+            break
+    entry_delete_receipt.delete(0, END)
+    if found:
+        print_hires()
+        messagebox.showinfo("Deleted", f"Record with receipt {target} deleted.")
+    else:
+        messagebox.showinfo("Not found", f"No record found with receipt {target}.")
+
+def show_raffle_list():
+    if not raffle_entries:
+        messagebox.showinfo("Raffle list", "No raffle entries yet.")
+        return
+    top = Toplevel(main_window)
+    top.title("Raffle list (Name - Ticket)")
+    Label(top, font=("Helvetica", 10, "bold"), text="Name").grid(column=0, row=0)
+    Label(top, font=("Helvetica", 10, "bold"), text="Ticket").grid(column=1, row=0)
+    for i, (name, ticket) in enumerate(raffle_entries):
+        Label(top, text=name).grid(column=0, row=i+1, sticky=W)
+        Label(top, text=str(ticket)).grid(column=1, row=i+1)
+
+# ---------- Build main window ----------
+main_window = Tk()
+main_window.title("Party Hire Tracker (Buggy Version)")
+
+Label(main_window, text="Customer full name:").grid(column=0, row=0, sticky=E)
+entry_name = Entry(main_window, width=30)
+entry_name.grid(column=1, row=0)
+
+Label(main_window, text="Receipt number:").grid(column=0, row=1, sticky=E)
+entry_receipt = Entry(main_window, width=20)
+entry_receipt.grid(column=1, row=1)
+
+Label(main_window, text="Item hired:").grid(column=0, row=2, sticky=E)
+entry_item = Entry(main_window, width=30)
+entry_item.grid(column=1, row=2)
+
+Label(main_window, text="Number of items (1-500):").grid(column=0, row=3, sticky=E)
+entry_qty = Entry(main_window, width=10)
+entry_qty.grid(column=1, row=3, sticky=W)
+
+Label(main_window, text="Date hired from (DD/MM/YYYY):").grid(column=0, row=4, sticky=E)
+entry_date_from = Entry(main_window, width=15)
+entry_date_from.grid(column=1, row=4, sticky=W)
+
+Label(main_window, text="Date to be returned (DD/MM/YYYY):").grid(column=0, row=5, sticky=E)
+entry_date_return = Entry(main_window, width=15)
+entry_date_return.grid(column=1, row=5, sticky=W)
+
+Button(main_window, text="Add hire (assign raffle)", command=add_hire, width=20).grid(column=3, row=1)
+Button(main_window, text="Show hires", command=print_hires, width=15).grid(column=3, row=2)
+Button(main_window, text="Show raffle list", command=show_raffle_list, width=15).grid(column=3, row=3)
+Button(main_window, text="Quit", command=main_window.destroy, width=10).grid(column=3, row=0)
+
+Label(main_window, text="Delete by receipt #:").grid(column=0, row=6, sticky=E)
+entry_delete_receipt = Entry(main_window, width=15)
+entry_delete_receipt.grid(column=1, row=6, sticky=W)
+Button(main_window, text="Delete", command=delete_by_receipt).grid(column=3, row=6)
+
+Label(main_window, text="Notes: Dates must be DD/MM/YYYY. Qty 1-500. Raffle number 1-1000 assigned when added.").grid(column=0, row=7, columnspan=4)
+
+main_window.mainloop()
 
 
-def main():
-    Button(main_window, text="Quit",command=quit) .grid(row=1,column=5)
-    Button(main_window, text="Print",command=entry_print) .grid(row=1,column=6)
-    Button(main_window, text="Append Details",command=append_name) .grid(row=1,column=7)
-    Label(main_window, text="Customer First Name").grid(row=1,column=0)
-    Label(main_window, text="Customer last  Name").grid(row=2,column=0)
-    Label(main_window, text="recipt number").grid(row=3,column=0)
-    Label(main_window, text="item that is hired").grid(row=4,column=0)
-    Label(main_window, text="item customer has hired").grid(row=5,column=0)
-    main_window.mainloop()
-
-
-
-
-
-def append_name ():
-    camp_details.append([entry_name.get,entry_last.get,entry_number.get(),entry_item.get(),entry_hired.get()])
-    entry_name.delete(0,'end')
-    entry_age.delete(0,'end')
-    entry_gender.delete(0,'end')
-    counters['total_entries'] += 1
- 
- 
-
-
-#create the button and labels
-def set up_buttons():
-globbal camp_details, entry_leader,entry_location,entry_campers,entry_weather,total_entries,delete_item
-button(Main_window, text="Quit", command=quit).grid(column=1,row=0
-button(main_windo, text="Print details"
- 
- 
-    
- 
-
-main_window=Tk()
-entry_first_name=Entry(main_window)
-entry_first_name.grid(row=1,column=1)
-
-entry_last_name=Entry(main_window)
-entry_last_name.grid(row=2,column=1)
-entry_recipt_number=Entry(main_window)
-entry_recipt_number.grid(row=3,column=1)
-
-entry_item_hired=Entry(main_window)
-entry_item_hired.grid(row=4,column=1)
-
-entry_customer_hired=Entry(main_window)
-entry_customer_hired.grid(row=5,column=1)
-
-main()
