@@ -124,14 +124,15 @@ def delete_by_receipt():
         return
     found = False
     for idx, rec in enumerate(hires):
-        if rec["receipt"] == target:
-            found = True
-            try:
-                raffle_entries.remove((rec["name"], rec["raffle"]))
-            except ValueError:
-                pass
-            del hires[idx]
-            break
+    
+     if rec["receipt"] == target:
+        try: raffle_entries.remove((rec["name"], rec["raffle"]))
+        except ValueError:
+        pass
+        del hires[idx]
+        
+break
+        
     entry_delete_receipt.delete(0, END)
     if found:
         print_hires()
