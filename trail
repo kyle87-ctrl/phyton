@@ -76,13 +76,14 @@ else:
     }
     hires.append(record)
     raffle_entries.append((name, raffle_num))
+    
 
-    entry_name.delete(0)
-    entry_receipt.delete(0)
-    entry_item.delete(0)
-    entry_qty.delete(0)
-    entry_date_from.delete(0)
-    entry_date_return.delete(0)
+    entry_name.delete(0, END)
+    entry_receipt.delete(0, END)
+    entry_item.delete(0, END)
+    entry_qty.delete(0, END)
+    entry_date_from.delete(0, END)
+    entry_date_return.delete(0, END)
 
     print_hires()
     messagebox.showinfo("Added", f"Hire added. Raffle ticket: {raffle_num}")
