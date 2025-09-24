@@ -25,14 +25,15 @@ def clear_error_labels():
         Label(main_window, text=" " * 20).grid(column=2, row=r)
 
 def add_hire():
-    clear_error_labels()
-    name = entry_name.get().strip()
-    receipt = entry_receipt.get().strip()
-    item = entry_item.get().strip()
-    qty_text = entry_qty.get().strip()
-    date_from = entry_date_from.get().strip()
-    date_return = entry_date_return.get().strip()
-    invalid = False
+   entry_name.delete(0, END)
+    entry_receipt.delete(0, END)
+    entry_item.delete(0, END)
+    entry_qty.delete(0, END)
+    entry_date_from.delete(0, END)
+    entry_date_return.delete(0, END)
+
+    print_hires()
+    messagebox.showinfo("Added", f"Hire added. Raffle ticket: {raffle_num}")
 
     if len(name) == 0:
         Label(main_window, fg="red", text="Required").grid(column=2, row=0)
