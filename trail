@@ -35,9 +35,7 @@ def add_hire():
     date_return = entry_date_return.get().strip()
     invalid = False 
 
-    print_hires()
-    messagebox.showinfo("Added", f"Hire added. Raffle ticket: {raffle_num}")
-
+      # Name required
     if len(name) == 0:
         Label(main_window, fg="red", text="Required").grid(column=2, row=0)
         invalid = True
@@ -67,6 +65,7 @@ else:
     if invalid:
         return
 
+    # If OK, create record and append
     raffle_num = random.randint(1, 1000)
     record = {
         "name": name,
@@ -80,8 +79,8 @@ else:
     }
     hires.append(record)
     raffle_entries.append((name, raffle_num))
-    
 
+    # clear entry fields
     entry_name.delete(0, END)
     entry_receipt.delete(0, END)
     entry_item.delete(0, END)
@@ -89,15 +88,19 @@ else:
     entry_date_from.delete(0, END)
     entry_date_return.delete(0, END)
 
+    # update display
     print_hires()
     messagebox.showinfo("Added", f"Hire added. Raffle ticket: {raffle_num}")
 
 def print_hires():
+    """Clear previous table area and display all hires in a table (grid)."""
+    # Remove widgets from rows >= 10 (table area)
     for widget in main_window.grid_slaves():
         r = int(widget.grid_info().get("row", 0))
         if r >= 10:
             widget.destroy()
 
+  # Headings at row 9
     row_base = 9
     Label(main_window, font=("Helvetica", 10, "bold"), text="Row").grid(column=0, row=row_base)
     Label(main_window, font=("Helvetica", 10, "bold"), text="Name").grid(column=1, row=row_base)
