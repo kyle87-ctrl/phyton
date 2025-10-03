@@ -139,8 +139,9 @@ def delete_by_receipt():
         del hires[idx]
         
 break
-        
-    entry_delete_receipt.delete(0, END)
+
+
+     entry_delete_receipt.delete(0, END)
     if found:
         print_hires()
         messagebox.showinfo("Deleted", f"Record with receipt {target} deleted.")
